@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  nginx: 
+    container_name: nginx
+    image: nginx:stable-alpine
+    restart: always
+    ports:
+      - "${APP_PORT}:80/tcp"
+    volumes: 
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+
+  frontend:
+    container_name: frontend
+    build: ./front-ui
+    restart: always
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+
+  api:
+    container_name: api
+    build: ./central-api
+    restart: always
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_NAME=fsp
+      - DB_USER=fsp
+      - DB_PASS
+
+  db:
+    container_name: db
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=fsp
+      - POSTGRES_USER=fsp
+      - POSTGRES_PASSWORD=${DB_PASS}
