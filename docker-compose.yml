@@ -41,3 +41,9 @@ services:
       - POSTGRES_DB=fsp
       - POSTGRES_USER=fsp
       - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - fsp-pgdata:/var/lib/postgresql/data
+
+volumes:
+  fsp-pgdata:
+    external: true
