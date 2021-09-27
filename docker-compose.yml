@@ -1,14 +1,35 @@
 version: '3'
 
 services:
-  nginx: 
-    container_name: nginx
-    image: nginx:stable-alpine
-    restart: always
+
+  traefik:
+    container_name: traefik
+    image: traefik:v2.5
+    privileged: true
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+
+      # Listen for https on 443, and http on 80 which just redirects to https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.web.http.redirections.entrypoint.permanent=true
+
+      # Let's Encrypt
+      - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+
     ports:
-      - "${APP_PORT}:80/tcp"
-    volumes: 
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:z
+      - 443:443
+      - 80:80
+      - 127.0.0.1:9091:8080
+
+    volumes:
+      - ./letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   frontend:
     container_name: frontend
@@ -18,7 +39,12 @@ services:
       - PORT=3000
       - HOST=0.0.0.0
       - BASE_URL=http://api:3000/
-      - BROWSER_BASE_URL
+      - BROWSER_BASE_URL=https://${DOMAIN}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.frontend.entrypoints=websecure
+      - traefik.http.routers.frontend.tls.certresolver=letsencrypt
 
   api:
     container_name: api
@@ -26,12 +52,19 @@ services:
     restart: always
     environment:
       - PORT=3000
+      - HOST=0.0.0.0
       - DB_HOST=db
       - DB_PORT=5432
       - DB_NAME=fsp
       - DB_USER=fsp
       - DB_PASS
       - REQUEST_TIMEOUT_THRESHOLD
+      - BROWSER_BASE_URL=https://${DOMAIN}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)
+      - traefik.http.routers.api.entrypoints=websecure
+      - traefik.http.routers.api.tls.certresolver=letsencrypt
 
   db:
     container_name: db
