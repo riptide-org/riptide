@@ -11,6 +11,8 @@ cd file-share-platform
 cp .example.dev.env .env
 nano .env # Update port and host if desired
 
+docker volume create fsp-dev-pgdata
+
 docker-compose -f docker-compose.dev.yml --env-file .env up
 ```
 
@@ -23,5 +25,6 @@ cd file-share-platform
 cp .example.env .env
 nano .env # Update domain and email for letsencrypt config, set a long random database password
 
+docker volume create fsp-pgdata
 docker-compose --env-file .env up
 ```
