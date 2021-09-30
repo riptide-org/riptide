@@ -1,6 +1,6 @@
 # File Share Platform
 
-This acts as a master repository for deployin gthe file share platform.
+This acts as a master repository for deploying the file share platform.
 
 ## Development Setup
 
