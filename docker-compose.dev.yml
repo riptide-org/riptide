@@ -43,6 +43,11 @@ services:
       - traefik.http.routers.frontend.rule=Host(`${APP_HOST:-localhost}`)
       - traefik.http.routers.frontend.entrypoints=web
       - traefik.http.routers.frontend.middlewares=security-headers@file
+      # Also allow https
+      - traefik.http.routers.frontendTLS.rule=Host(`${APP_HOST:-localhost}`)
+      - traefik.http.routers.frontendTLS.entrypoints=web
+      - traefik.http.routers.frontendTLS.middlewares=security-headers@file
+      - traefik.http.routers.frontendTLS.tls=true
       - traefik.http.services.frontend.loadBalancer.server.port=3000 # required because build can take a while on start
     volumes:
       - ./front-ui:/app:z
@@ -68,6 +73,11 @@ services:
       - traefik.http.routers.api.rule=Host(`${APP_HOST:-localhost}`) && PathPrefix(`/api`)
       - traefik.http.routers.api.entrypoints=web
       - traefik.http.routers.api.middlewares=security-headers@file, api-headers@file
+      # Also allow https
+      - traefik.http.routers.apiTLS.rule=Host(`${APP_HOST:-localhost}`) && PathPrefix(`/api`)
+      - traefik.http.routers.apiTLS.entrypoints=web
+      - traefik.http.routers.apiTLS.middlewares=security-headers@file, api-headers@file
+      - traefik.http.routers.apiTLS.tls=true
 
   db:
     container_name: db
