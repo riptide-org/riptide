@@ -34,7 +34,7 @@ services:
       - 127.0.0.1:9091:8080
 
     volumes:
-      - ./letsencrypt:/letsencrypt
+      - fsp-letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
 
@@ -91,3 +91,4 @@ services:
 volumes:
   fsp-pgdata:
     external: true
+  fsp-letsencrypt:
