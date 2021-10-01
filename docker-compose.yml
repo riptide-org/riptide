@@ -38,7 +38,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
     configs:
-      - traefik-dyanmic.yml
+      - traefik-dynamic.yml
 
   frontend:
     container_name: frontend
