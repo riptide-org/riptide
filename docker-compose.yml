@@ -40,7 +40,7 @@ services:
 
   frontend:
     container_name: frontend
-    build: ./front-ui
+    image: ghcr.io/file-share-platform/front-ui:main
     restart: always
     depends_on:
       - api
@@ -57,7 +57,7 @@ services:
 
   api:
     container_name: api
-    build: ./central-api
+    image: https://ghcr.io/file-share-platform/central-api:main
     restart: always
     depends_on:
       - db

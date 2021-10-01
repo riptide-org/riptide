@@ -1,8 +1,0 @@
-[submodule "front-ui"]
-	path = front-ui
-	url = https://github.com/file-share-platform/front-ui
-	fetchRecurseSubmodules = true
-[submodule "central-api"]
-	path = central-api
-	url = https://github.com/file-share-platform/central-api
-	fetchRecurseSubmodules = true
