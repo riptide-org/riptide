@@ -13,7 +13,7 @@ services:
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-      - --providers.file.filename=/etc/traefik/traefik-dynamic.yml
+      - --providers.file.filename=/traefik-dynamic.yml
 
       # Let's Encrypt
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
@@ -36,7 +36,9 @@ services:
     volumes:
       - fsp-letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
+
+    configs:
+      - traefik-dyanmic.yml
 
   frontend:
     container_name: frontend
@@ -87,6 +89,10 @@ services:
       - POSTGRES_PASSWORD=${DB_PASS}
     volumes:
       - fsp-pgdata:/var/lib/postgresql/data
+
+configs:
+  traefik-dynamic.yml:
+    file: ./traefik-dynamic.yml
 
 volumes:
   fsp-pgdata:
