@@ -57,7 +57,7 @@ services:
 
   api:
     container_name: api
-    image: https://ghcr.io/file-share-platform/central-api:main
+    image: ghcr.io/file-share-platform/central-api:main
     restart: always
     depends_on:
       - db
