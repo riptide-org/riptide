@@ -9,7 +9,7 @@ git clone git@github.com:riptide-org/riptide.git --recursive
 cd riptide
 
 cp .example.dev.env .dev.env
-nano .dev.env # Update port etc if you'de like
+nano .dev.env # Update port etc if you'd like
 
 ./dev.sh
 ```
@@ -18,7 +18,7 @@ nano .dev.env # Update port etc if you'de like
 
 ```sh
 git clone git@github.com:riptide-org/riptide.git --recursive
-cd file-share-platform
+cd riptide
 
 cp .example.env .env
 nano .env # Update APP_HOST
