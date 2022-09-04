@@ -1,0 +1,7 @@
+{$HOST_NAME} {
+    log
+    handle_path /api/v1/* {
+        reverse_proxy http://api:3000
+    }
+    reverse_proxy http://frontend:3000
+}
