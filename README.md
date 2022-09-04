@@ -1,30 +1,27 @@
-# File Share Platform
+# Riptide
 
-This acts as a master repository for deploying the file share platform.
+This acts as a master repository for deploying Riptide.
 
 ## Development Setup
 
 ```sh
-git clone https://github.com/file-share-platform/file-share-platform --recursive
-cd file-share-platform
+git clone git@github.com:riptide-org/riptide.git --recursive
+cd riptide
 
-cp .example.dev.env .env
-nano .env # Update port and host if desired
+cp .example.dev.env .dev.env
+nano .dev.env # Update port etc if you'de like
 
-docker volume create fsp-dev-pgdata
-
-docker-compose -f docker-compose.dev.yml --env-file .env up
+./dev.sh
 ```
 
 ## Simple Production Deployment
 
 ```sh
-git clone https://github.com/file-share-platform/file-share-platform --recursive
+git clone git@github.com:riptide-org/riptide.git --recursive
 cd file-share-platform
 
 cp .example.env .env
-nano .env # Update domain and email for letsencrypt config, set a long random database password
+nano .env # Update APP_HOST
 
-docker volume create fsp-pgdata
-docker-compose --env-file .env up
+docker-compose up
 ```
