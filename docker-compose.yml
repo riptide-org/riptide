@@ -17,7 +17,7 @@ services:
       - caddy-data:/data
 
   frontend:
-    image: ghcr.io/riptide-org/front-ui:main
+    image: ghcr.io/riptide-org/website:main
     restart: unless-stopped
     depends_on:
       - api
@@ -26,9 +26,7 @@ services:
       - HOST=0.0.0.0
       - SSR_BASE_URL=http://api:3000/
       - BROWSER_BASE_URL=https://${APP_HOST}
-    volumes:
-      - ./front-ui:/app:z
-
+      
   api:
     image: ghcr.io/riptide-org/central-api:main
     restart: unless-stopped
