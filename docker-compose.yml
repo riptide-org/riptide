@@ -17,11 +17,10 @@ services:
       - caddy-data:/data
 
   frontend:
-    build: ./front-ui
-    restart: always
+    image: ghcr.io/riptide-org/front-ui:main
+    restart: unless-stopped
     depends_on:
       - api
-    restart: unless-stopped
     environment:
       - PORT=3000
       - HOST=0.0.0.0
@@ -31,7 +30,7 @@ services:
       - ./front-ui:/app:z
 
   api:
-    build: ./central-api
+    image: ghcr.io/riptide-org/central-api:main
     restart: unless-stopped
     environment:
       - PORT=3000
