@@ -7,7 +7,7 @@ services:
     ports:
       - "${APP_PORT:-3000}:80"
     environment:
-      HOST_NAME: ":80"
+      APP_HOST: ":80"
     depends_on:
       - frontend
       - api
