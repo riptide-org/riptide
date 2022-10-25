@@ -34,10 +34,11 @@ services:
       - PORT=3000
       - HOST=0.0.0.0
       - DB_URL=/data/riptide.db
-      - BASE_URL=https://${APP_HOST}
+      - BASE_URL=https://${APP_HOST}/api/v1
       - REQUEST_TIMEOUT
       - AUTH_TIMEOUT
       - PING_INTERVAL
+      - SERVER_PASS
     volumes:
       - sqlite-db-data:/data
 

@@ -39,6 +39,7 @@ services:
       - REQUEST_TIMEOUT
       - AUTH_TIMEOUT
       - PING_INTERVAL
+      - SERVER_PASS
     volumes:
       - sqlite-db-data:/data
 
